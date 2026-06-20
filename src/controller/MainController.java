@@ -65,10 +65,10 @@ public class MainController {
     }
 
     private void configureTooltips() {
-        patientsButton.setTooltip(new Tooltip("Accéder à la gestion des patients"));
-        treatmentsButton.setTooltip(new Tooltip("Accéder à la gestion des traitements médicaux"));
-        statisticsButton.setTooltip(new Tooltip("Consulter les statistiques de suivi"));
-        settingsButton.setTooltip(new Tooltip("Modifier les paramètres de l'application"));
+        patientsButton.setTooltip(new Tooltip("Gérer les patients : ajout, modification, suppression, recherche"));
+        treatmentsButton.setTooltip(new Tooltip("Gérer les traitements associés aux patients"));
+        statisticsButton.setTooltip(new Tooltip("Consulter les indicateurs et statistiques"));
+        settingsButton.setTooltip(new Tooltip("Personnaliser l'apparence de l'application"));
     }
 
     private void configureActions() {
@@ -84,33 +84,34 @@ public class MainController {
         addTreatmentItem.setOnAction(event -> loadPage("TreatmentView.fxml", "Statut : ajout d'un traitement"));
 
         importItem.setOnAction(event ->
-                AlertUtil.showInfo("Importation", "La fonction d'importation sera ajoutée dans les prochaines séances.")
+                AlertUtil.showInfo("Importation", "L'importation de fichiers sera ajoutée comme amélioration.")
         );
 
         exportItem.setOnAction(event ->
-                AlertUtil.showInfo("Exportation", "La fonction d'export CSV sera ajoutée dans les prochaines séances.")
+                AlertUtil.showInfo("Export CSV", "Utilisez les boutons Exporter CSV dans les sections Patients ou Traitements.")
         );
 
-        aboutItem.setOnAction(event ->
-                AlertUtil.showInfo(
-                        "À propos",
-                        "Application de Suivi de Traitements Médicaux\n" +
-                                "Mini-projet JavaFX - ENSAO GI3\n" +
-                                "Séance 1 : structure principale de l'application."
-                )
-        );
+        aboutItem.setOnAction(event -> AlertUtil.showAboutDialog());
 
-        quitItem.setOnAction(event -> Platform.exit());
+        quitItem.setOnAction(event -> {
+            boolean confirm = AlertUtil.confirm("Quitter", "Voulez-vous vraiment quitter l'application ?");
+            if (confirm) {
+                Platform.exit();
+            }
+        });
     }
 
     private void showWelcomePage() {
-        Label title = new Label("Bienvenue dans l'application de Suivi de Traitements Médicaux");
+        Label title = new Label("Suivi de Traitements Médicaux");
         title.getStyleClass().add("welcome-title");
 
-        Label subtitle = new Label("Utilisez le menu ou les boutons de navigation pour accéder aux sections.");
+        Label subtitle = new Label("Application JavaFX avec FXML, CSS, MVC, DAO, JDBC et MySQL");
         subtitle.getStyleClass().add("welcome-subtitle");
 
-        VBox box = new VBox(15, title, subtitle);
+        Label info = new Label("Choisissez une section dans le menu latéral.");
+        info.getStyleClass().add("welcome-info");
+
+        VBox box = new VBox(15, title, subtitle, info);
         box.setAlignment(Pos.CENTER);
 
         contentPane.getChildren().setAll(box);
