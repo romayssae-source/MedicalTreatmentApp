@@ -6,7 +6,6 @@ public class Treatment {
 
     private int id;
     private int patientId;
-    private String patientName;
     private String nom;
     private String type;
     private String posologie;
@@ -16,18 +15,15 @@ public class Treatment {
     private boolean actif;
     private int dureeEstimee;
     private int nombrePrisesParJour;
-    private double progression;
 
     public Treatment() {
     }
 
-    public Treatment(int id, int patientId, String patientName, String nom, String type,
-                     String posologie, String effetsSecondaires, LocalDate dateDebut,
-                     LocalDate dateFin, boolean actif, int dureeEstimee,
-                     int nombrePrisesParJour, double progression) {
+    public Treatment(int id, int patientId, String nom, String type, String posologie,
+                     String effetsSecondaires, LocalDate dateDebut, LocalDate dateFin,
+                     boolean actif, int dureeEstimee, int nombrePrisesParJour) {
         this.id = id;
         this.patientId = patientId;
-        this.patientName = patientName;
         this.nom = nom;
         this.type = type;
         this.posologie = posologie;
@@ -37,15 +33,12 @@ public class Treatment {
         this.actif = actif;
         this.dureeEstimee = dureeEstimee;
         this.nombrePrisesParJour = nombrePrisesParJour;
-        this.progression = progression;
     }
 
-    public Treatment(int patientId, String patientName, String nom, String type,
-                     String posologie, String effetsSecondaires, LocalDate dateDebut,
-                     LocalDate dateFin, boolean actif, int dureeEstimee,
-                     int nombrePrisesParJour, double progression) {
+    public Treatment(int patientId, String nom, String type, String posologie,
+                     String effetsSecondaires, LocalDate dateDebut, LocalDate dateFin,
+                     boolean actif, int dureeEstimee, int nombrePrisesParJour) {
         this.patientId = patientId;
-        this.patientName = patientName;
         this.nom = nom;
         this.type = type;
         this.posologie = posologie;
@@ -55,7 +48,6 @@ public class Treatment {
         this.actif = actif;
         this.dureeEstimee = dureeEstimee;
         this.nombrePrisesParJour = nombrePrisesParJour;
-        this.progression = progression;
     }
 
     public int getId() {
@@ -73,15 +65,6 @@ public class Treatment {
 
     public void setPatientId(int patientId) {
         this.patientId = patientId;
-    }
-
-
-    public String getPatientName() {
-        return patientName;
-    }
-
-    public void setPatientName(String patientName) {
-        this.patientName = patientName;
     }
 
 
@@ -165,17 +148,8 @@ public class Treatment {
         this.nombrePrisesParJour = nombrePrisesParJour;
     }
 
-
-    public double getProgression() {
-        return progression;
-    }
-
-    public void setProgression(double progression) {
-        this.progression = progression;
-    }
-
     @Override
     public String toString() {
-        return nom + " - " + patientName;
+        return nom + " - " + type;
     }
 }
