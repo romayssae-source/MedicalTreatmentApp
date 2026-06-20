@@ -59,6 +59,7 @@ public class Database {
                         actif BOOLEAN DEFAULT TRUE,
                         duree_estimee INT,
                         nombre_prises_par_jour INT,
+                        progression DOUBLE DEFAULT 0,
                         FOREIGN KEY (patient_id) REFERENCES patients(id)
                             ON DELETE CASCADE
                             ON UPDATE CASCADE
