@@ -1,23 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      spacing="15"
-      alignment="CENTER">
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.StatisticsController"
+            styleClass="page-root">
 
-    <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
-    </padding>
+    <top>
+        <VBox spacing="5">
+            <children>
+                <Label text="Tableau de Bord / Statistiques" styleClass="page-title"/>
+                <Label text="Indicateurs chiffrés et suivi global de l'application." styleClass="page-subtitle"/>
+            </children>
+        </VBox>
+    </top>
 
-    <children>
-        <Label text="Statistiques" styleClass="page-title"/>
-        <Label text="Aperçu des indicateurs de suivi."/>
-        <ProgressBar progress="0.35" prefWidth="300"/>
-    </children>
+    <center>
+        <VBox spacing="25">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
-</VBox>
+            <children>
+
+                <HBox spacing="20" alignment="CENTER">
+                    <children>
+
+                        <VBox spacing="8" alignment="CENTER" styleClass="stat-card">
+                            <children>
+                                <Label text="Patients" styleClass="stat-title"/>
+                                <Label fx:id="totalPatientsLabel" text="0" styleClass="stat-number"/>
+                                <Label text="Total patients"/>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="8" alignment="CENTER" styleClass="stat-card">
+                            <children>
+                                <Label text="Surveillance" styleClass="stat-title"/>
+                                <Label fx:id="surveillancePatientsLabel" text="0" styleClass="stat-number"/>
+                                <Label text="Patients surveillés"/>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="8" alignment="CENTER" styleClass="stat-card">
+                            <children>
+                                <Label text="Traitements" styleClass="stat-title"/>
+                                <Label fx:id="totalTreatmentsLabel" text="0" styleClass="stat-number"/>
+                                <Label text="Total traitements"/>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="8" alignment="CENTER" styleClass="stat-card">
+                            <children>
+                                <Label text="Actifs" styleClass="stat-title"/>
+                                <Label fx:id="activeTreatmentsLabel" text="0" styleClass="stat-number"/>
+                                <Label text="Traitements actifs"/>
+                            </children>
+                        </VBox>
+
+                    </children>
+                </HBox>
+
+                <GridPane hgap="20" vgap="18" styleClass="panel-card">
+                    <padding>
+                        <Insets top="25" right="25" bottom="25" left="25"/>
+                    </padding>
+
+                    <children>
+                        <Label text="Taux de patients sous surveillance :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <ProgressBar fx:id="surveillanceProgressBar" prefWidth="400" progress="0" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Taux de traitements actifs :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <ProgressBar fx:id="activeTreatmentsProgressBar" prefWidth="400" progress="0" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Progression moyenne des traitements :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <HBox spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                            <children>
+                                <ProgressBar fx:id="averageProgressBar" prefWidth="300" progress="0"/>
+                                <Label fx:id="averageProgressLabel" text="0 %"/>
+                            </children>
+                        </HBox>
+
+                        <Label text="Chargement :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <ProgressIndicator fx:id="loadingIndicator" prefWidth="35" prefHeight="35" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    </children>
+                </GridPane>
+
+                <VBox spacing="10" styleClass="panel-card">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <children>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <children>
+                                <Label text="Résumé général" styleClass="section-title"/>
+                                <Button text="Actualiser" onAction="#refreshStatistics"/>
+                            </children>
+                        </HBox>
+
+                        <ListView fx:id="summaryListView" prefHeight="180"/>
+                    </children>
+                </VBox>
+
+            </children>
+        </VBox>
+    </center>
+
+</BorderPane>
