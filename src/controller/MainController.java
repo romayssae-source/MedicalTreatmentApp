@@ -1,132 +1,138 @@
 package controller;
 
 import javafx.application.Platform;
-import javafx.scene.paint.Color;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import util.AlertUtil;
-import view.MainView;
-import view.SettingsView;
+
+import java.io.IOException;
+import java.net.URL;
 
 public class MainController {
 
-    private final MainView mainView;
+    @FXML
+    private Button patientsButton;
 
-    private final PatientView patientView;
-    private final TreatmentView treatmentView;
-    private final StatisticsView statisticsView;
-    private final SettingsView settingsView;
+    @FXML
+    private Button treatmentsButton;
 
-    private final PatientController patientController;
-    private final TreatmentController treatmentController;
+    @FXML
+    private Button statisticsButton;
 
-    private String currentSection = "patients";
+    @FXML
+    private Button settingsButton;
 
-    public MainController(MainView mainView) {
-        this.mainView = mainView;
+    @FXML
+    private StackPane contentPane;
 
-        this.patientView = new PatientView();
-        this.treatmentView = new TreatmentView();
-        this.statisticsView = new StatisticsView();
-        this.settingsView = new SettingsView();
+    @FXML
+    private Label statusLabel;
 
-        this.patientController = new PatientController(patientView);
-        this.treatmentController = new TreatmentController(treatmentView);
+    @FXML
+    private MenuItem importItem;
 
-        initializeActions();
-        showPatients();
+    @FXML
+    private MenuItem exportItem;
+
+    @FXML
+    private MenuItem quitItem;
+
+    @FXML
+    private MenuItem addPatientItem;
+
+    @FXML
+    private MenuItem managePatientsItem;
+
+    @FXML
+    private MenuItem addTreatmentItem;
+
+    @FXML
+    private MenuItem manageTreatmentsItem;
+
+    @FXML
+    private MenuItem aboutItem;
+
+    @FXML
+    public void initialize() {
+        configureTooltips();
+        configureActions();
+        showWelcomePage();
     }
 
-    private void initializeActions() {
-        mainView.getPatientsButton().setOnAction(e -> showPatients());
-        mainView.getTreatmentsButton().setOnAction(e -> showTreatments());
-        mainView.getStatisticsButton().setOnAction(e -> showStatistics());
-        mainView.getSettingsButton().setOnAction(e -> showSettings());
+    private void configureTooltips() {
+        patientsButton.setTooltip(new Tooltip("Accéder à la gestion des patients"));
+        treatmentsButton.setTooltip(new Tooltip("Accéder à la gestion des traitements médicaux"));
+        statisticsButton.setTooltip(new Tooltip("Consulter les statistiques de suivi"));
+        settingsButton.setTooltip(new Tooltip("Modifier les paramètres de l'application"));
+    }
 
-        mainView.getManagePatientsItem().setOnAction(e -> showPatients());
-        mainView.getAddPatientItem().setOnAction(e -> {
-            showPatients();
-            patientView.getNomField().requestFocus();
-        });
+    private void configureActions() {
+        patientsButton.setOnAction(event -> loadPage("PatientView.fxml", "Statut : section Patients"));
+        treatmentsButton.setOnAction(event -> loadPage("TreatmentView.fxml", "Statut : section Traitements"));
+        statisticsButton.setOnAction(event -> loadPage("StatisticsView.fxml", "Statut : section Statistiques"));
+        settingsButton.setOnAction(event -> loadPage("SettingsView.fxml", "Statut : section Paramètres"));
 
-        mainView.getManageTreatmentsItem().setOnAction(e -> showTreatments());
-        mainView.getAddTreatmentItem().setOnAction(e -> {
-            showTreatments();
-            treatmentView.getNomField().requestFocus();
-        });
+        managePatientsItem.setOnAction(event -> loadPage("PatientView.fxml", "Statut : gestion des patients"));
+        addPatientItem.setOnAction(event -> loadPage("PatientView.fxml", "Statut : ajout d'un patient"));
 
-        mainView.getQuitItem().setOnAction(e -> Platform.exit());
+        manageTreatmentsItem.setOnAction(event -> loadPage("TreatmentView.fxml", "Statut : gestion des traitements"));
+        addTreatmentItem.setOnAction(event -> loadPage("TreatmentView.fxml", "Statut : ajout d'un traitement"));
 
-        mainView.getImportItem().setOnAction(e ->
-                AlertUtil.showInfo("Importer", "La fonctionnalité d'import sera ajoutée plus tard.")
+        importItem.setOnAction(event ->
+                AlertUtil.showInfo("Importation", "La fonction d'importation sera ajoutée dans les prochaines séances.")
         );
 
-        mainView.getExportItem().setOnAction(e -> {
-            if ("patients".equals(currentSection)) {
-                patientController.exportPatients();
-            } else if ("treatments".equals(currentSection)) {
-                treatmentController.exportTreatments();
-            } else {
-                AlertUtil.showInfo("Export", "Allez dans Patients ou Traitements pour exporter les données.");
-            }
-        });
+        exportItem.setOnAction(event ->
+                AlertUtil.showInfo("Exportation", "La fonction d'export CSV sera ajoutée dans les prochaines séances.")
+        );
 
-        mainView.getAboutItem().setOnAction(e ->
+        aboutItem.setOnAction(event ->
                 AlertUtil.showInfo(
                         "À propos",
                         "Application de Suivi de Traitements Médicaux\n" +
                                 "Mini-projet JavaFX - ENSAO GI3\n" +
-                                "Technologies : JavaFX, JDBC, MySQL"
+                                "Séance 1 : structure principale de l'application."
                 )
         );
 
-        settingsView.getApplyColorButton().setOnAction(e -> applySelectedColor());
-        settingsView.getResetButton().setOnAction(e -> {
-            mainView.getLayout().setStyle("");
-            settingsView.getInfoLabel().setText("Style réinitialisé.");
-            mainView.getStatusLabel().setText("Statut : paramètres réinitialisés");
-        });
+        quitItem.setOnAction(event -> Platform.exit());
     }
 
-    private void showPatients() {
-        currentSection = "patients";
-        patientController.refreshData();
-        mainView.getContentPane().getChildren().setAll(patientView.getRoot());
-        mainView.getStatusLabel().setText("Statut : section Patients");
+    private void showWelcomePage() {
+        Label title = new Label("Bienvenue dans l'application de Suivi de Traitements Médicaux");
+        title.getStyleClass().add("welcome-title");
+
+        Label subtitle = new Label("Utilisez le menu ou les boutons de navigation pour accéder aux sections.");
+        subtitle.getStyleClass().add("welcome-subtitle");
+
+        VBox box = new VBox(15, title, subtitle);
+        box.setAlignment(Pos.CENTER);
+
+        contentPane.getChildren().setAll(box);
+        statusLabel.setText("Statut : application lancée");
     }
 
-    private void showTreatments() {
-        currentSection = "treatments";
-        treatmentController.refreshData();
-        mainView.getContentPane().getChildren().setAll(treatmentView.getRoot());
-        mainView.getStatusLabel().setText("Statut : section Traitements");
-    }
+    private void loadPage(String fxmlFileName, String statusMessage) {
+        try {
+            URL pageUrl = getClass().getResource("/resources/fxml/" + fxmlFileName);
 
-    private void showStatistics() {
-        currentSection = "statistics";
-        statisticsView.refresh();
-        mainView.getContentPane().getChildren().setAll(statisticsView.getRoot());
-        mainView.getStatusLabel().setText("Statut : section Statistiques");
-    }
+            if (pageUrl == null) {
+                throw new IllegalStateException("Fichier FXML introuvable : " + fxmlFileName);
+            }
 
-    private void showSettings() {
-        currentSection = "settings";
-        mainView.getContentPane().getChildren().setAll(settingsView.getRoot());
-        mainView.getStatusLabel().setText("Statut : section Paramètres");
-    }
+            Parent page = FXMLLoader.load(pageUrl);
+            contentPane.getChildren().setAll(page);
+            statusLabel.setText(statusMessage);
 
-    private void applySelectedColor() {
-        Color color = settingsView.getColorPicker().getValue();
-        String webColor = toWebColor(color);
-
-        mainView.getLayout().setStyle("-fx-background-color: " + webColor + ";");
-        settingsView.getInfoLabel().setText("Couleur appliquée : " + webColor);
-        mainView.getStatusLabel().setText("Statut : couleur personnalisée appliquée");
-    }
-
-    private String toWebColor(Color color) {
-        int r = (int) Math.round(color.getRed() * 255);
-        int g = (int) Math.round(color.getGreen() * 255);
-        int b = (int) Math.round(color.getBlue() * 255);
-
-        return String.format("#%02X%02X%02X", r, g, b);
+        } catch (IOException e) {
+            AlertUtil.showError("Erreur de chargement", "Impossible de charger la page : " + fxmlFileName);
+        } catch (IllegalStateException e) {
+            AlertUtil.showError("Fichier introuvable", e.getMessage());
+        }
     }
 }
