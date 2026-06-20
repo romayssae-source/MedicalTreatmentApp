@@ -7,10 +7,11 @@
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.MainController"
-            stylesheets="@../style.css">
+            stylesheets="@../style.css"
+            styleClass="root-layout">
 
     <top>
-        <MenuBar>
+        <MenuBar styleClass="top-menu">
             <menus>
                 <Menu text="Fichier">
                     <items>
@@ -45,16 +46,17 @@
     </top>
 
     <left>
-        <VBox spacing="12" prefWidth="200" styleClass="navigation">
+        <VBox spacing="14" prefWidth="230" styleClass="navigation">
             <padding>
-                <Insets top="20" right="15" bottom="20" left="15"/>
+                <Insets top="25" right="16" bottom="25" left="16"/>
             </padding>
 
             <children>
-                <Button fx:id="patientsButton" text="Patients"/>
-                <Button fx:id="treatmentsButton" text="Traitements"/>
-                <Button fx:id="statisticsButton" text="Statistiques"/>
-                <Button fx:id="settingsButton" text="Paramètres"/>
+                <Label text="MENU PRINCIPAL" styleClass="menu-title"/>
+                <Button fx:id="patientsButton" text="Patients" maxWidth="Infinity"/>
+                <Button fx:id="treatmentsButton" text="Traitements" maxWidth="Infinity"/>
+                <Button fx:id="statisticsButton" text="Statistiques" maxWidth="Infinity"/>
+                <Button fx:id="settingsButton" text="Paramètres" maxWidth="Infinity"/>
             </children>
         </VBox>
     </left>
@@ -70,9 +72,8 @@
     <bottom>
         <HBox styleClass="status-bar">
             <padding>
-                <Insets top="8" right="12" bottom="8" left="12"/>
+                <Insets top="8" right="15" bottom="8" left="15"/>
             </padding>
-
             <children>
                 <Label fx:id="statusLabel" text="Statut"/>
             </children>
