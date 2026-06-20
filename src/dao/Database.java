@@ -25,7 +25,6 @@ public class Database {
              Statement statement = serverConnection.createStatement()) {
 
             statement.executeUpdate("CREATE DATABASE IF NOT EXISTS medical_treatment_db");
-            System.out.println("Base de données vérifiée.");
 
         } catch (SQLException e) {
             System.err.println("Erreur création base : " + e.getMessage());
@@ -60,7 +59,6 @@ public class Database {
                         actif BOOLEAN DEFAULT TRUE,
                         duree_estimee INT,
                         nombre_prises_par_jour INT,
-                        progression DOUBLE,
                         FOREIGN KEY (patient_id) REFERENCES patients(id)
                             ON DELETE CASCADE
                             ON UPDATE CASCADE
@@ -69,8 +67,6 @@ public class Database {
 
             statement.executeUpdate(createPatientsTable);
             statement.executeUpdate(createTreatmentsTable);
-
-            System.out.println("Tables vérifiées.");
 
         } catch (SQLException e) {
             System.err.println("Erreur création tables : " + e.getMessage());
