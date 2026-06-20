@@ -1,23 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      spacing="15"
-      alignment="CENTER">
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.SettingsController"
+            styleClass="page-root">
 
-    <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
-    </padding>
+    <top>
+        <VBox spacing="5">
+            <children>
+                <Label text="Paramètres de l'application" styleClass="page-title"/>
+                <Label text="Personnalisation de l’interface et informations générales." styleClass="page-subtitle"/>
+            </children>
+        </VBox>
+    </top>
 
-    <children>
-        <Label text="Paramètres" styleClass="page-title"/>
-        <Label text="Personnalisation de l'interface."/>
-        <ColorPicker/>
-    </children>
+    <center>
+        <VBox spacing="25" alignment="TOP_CENTER">
+            <padding>
+                <Insets top="35" right="35" bottom="35" left="35"/>
+            </padding>
 
-</VBox>
+            <children>
+
+                <GridPane hgap="20" vgap="18" styleClass="panel-card">
+                    <padding>
+                        <Insets top="25" right="25" bottom="25" left="25"/>
+                    </padding>
+
+                    <children>
+                        <Label text="Thème :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="themeComboBox" prefWidth="250" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Couleur principale :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <ColorPicker fx:id="colorPicker" prefWidth="250" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Mode compact :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <CheckBox fx:id="compactModeCheckBox" text="Activer le mode compact" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Taille du texte :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <HBox spacing="12" GridPane.rowIndex="3" GridPane.columnIndex="1">
+                            <children>
+                                <Slider fx:id="fontSizeSlider" prefWidth="200"/>
+                                <Label fx:id="fontSizeLabel" text="14 px"/>
+                            </children>
+                        </HBox>
+                    </children>
+                </GridPane>
+
+                <HBox spacing="12" alignment="CENTER">
+                    <children>
+                        <Button fx:id="applyButton" text="Appliquer"/>
+                        <Button fx:id="resetButton" text="Réinitialiser"/>
+                        <Button fx:id="aboutButton" text="À propos"/>
+                    </children>
+                </HBox>
+
+                <VBox spacing="10" styleClass="panel-card">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <children>
+                        <Label text="Informations projet" styleClass="section-title"/>
+                        <Label text="Sujet : Application de suivi de traitements médicaux"/>
+                        <Label text="Technologies : JavaFX, FXML, CSS, JDBC, MySQL"/>
+                        <Label text="Architecture : MVC avec DAO"/>
+                        <Label text="Fonctionnalités : CRUD, recherche, filtrage, statistiques, export CSV"/>
+                    </children>
+                </VBox>
+
+            </children>
+        </VBox>
+    </center>
+
+</BorderPane>
