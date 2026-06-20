@@ -1,21 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      spacing="15"
-      alignment="CENTER">
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.PatientController"
+            styleClass="page-root">
 
-    <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
-    </padding>
+    <top>
+        <VBox spacing="5">
+            <children>
+                <Label text="Gestion des Patients" styleClass="page-title"/>
+                <Label text="Ajout, modification, suppression, recherche et filtrage des patients." styleClass="page-subtitle"/>
+            </children>
+        </VBox>
+    </top>
 
-    <children>
-        <Label text="Gestion des Patients" styleClass="page-title"/>
-        <Label text="Cette section sera développée dans la prochaine séance : ajout, modification, suppression, recherche et affichage des patients."/>
-    </children>
+    <left>
+        <Accordion prefWidth="360">
+            <panes>
+                <TitledPane text="Formulaire Patient" expanded="true">
+                    <content>
+                        <VBox spacing="12" styleClass="form-card">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
 
-</VBox>
+                            <children>
+                                <GridPane hgap="10" vgap="10">
+                                    <children>
+                                        <Label text="Nom :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="nomField" promptText="Nom du patient" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                        <Label text="Prénom :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="prenomField" promptText="Prénom du patient" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                                        <Label text="Date naissance :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                        <DatePicker fx:id="dateNaissancePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                                        <Label text="Sexe :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                        <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1">
+                                            <children>
+                                                <RadioButton fx:id="hommeRadio" text="Homme">
+                                                    <toggleGroup>
+                                                        <ToggleGroup fx:id="sexeGroup"/>
+                                                    </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton fx:id="femmeRadio" text="Femme" toggleGroup="$sexeGroup"/>
+                                            </children>
+                                        </HBox>
+
+                                        <Label text="Téléphone :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="telephoneField" promptText="06..." GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                                        <Label text="Remarques :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                                        <TextArea fx:id="remarquesArea" promptText="Informations médicales ou remarques" prefRowCount="3" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                                        <CheckBox fx:id="surveillanceCheckBox" text="Surveillance active" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                                    </children>
+                                </GridPane>
+
+                                <HBox spacing="8">
+                                    <children>
+                                        <Button fx:id="addButton" text="Ajouter"/>
+                                        <Button fx:id="updateButton" text="Modifier"/>
+                                    </children>
+                                </HBox>
+
+                                <HBox spacing="8">
+                                    <children>
+                                        <Button fx:id="deleteButton" text="Supprimer" styleClass="danger-button"/>
+                                        <Button fx:id="clearButton" text="Vider"/>
+                                    </children>
+                                </HBox>
+
+                                <Button fx:id="exportButton" text="Exporter CSV" maxWidth="Infinity"/>
+                            </children>
+                        </VBox>
+                    </content>
+                </TitledPane>
+
+                <TitledPane text="Liste rapide">
+                    <content>
+                        <VBox spacing="10" styleClass="form-card">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                            <children>
+                                <Label text="Patients enregistrés"/>
+                                <ListView fx:id="patientListView" prefHeight="220"/>
+                            </children>
+                        </VBox>
+                    </content>
+                </TitledPane>
+            </panes>
+        </Accordion>
+    </left>
+
+    <center>
+        <VBox spacing="12">
+            <padding>
+                <Insets top="0" right="0" bottom="0" left="15"/>
+            </padding>
+
+            <children>
+                <HBox spacing="10" styleClass="search-bar">
+                    <children>
+                        <TextField fx:id="searchField" promptText="Rechercher par nom, prénom ou téléphone" HBox.hgrow="ALWAYS"/>
+                        <ComboBox fx:id="filterSexeComboBox" prefWidth="130"/>
+                        <CheckBox fx:id="filterSurveillanceCheckBox" text="Surveillance"/>
+                        <ProgressIndicator fx:id="loadingIndicator" prefWidth="28" prefHeight="28"/>
+                    </children>
+                </HBox>
+
+                <TableView fx:id="patientTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+                        <TableColumn fx:id="nomColumn" text="Nom" prefWidth="130"/>
+                        <TableColumn fx:id="prenomColumn" text="Prénom" prefWidth="130"/>
+                        <TableColumn fx:id="dateColumn" text="Date naissance" prefWidth="130"/>
+                        <TableColumn fx:id="sexeColumn" text="Sexe" prefWidth="90"/>
+                        <TableColumn fx:id="telephoneColumn" text="Téléphone" prefWidth="130"/>
+                        <TableColumn fx:id="surveillanceColumn" text="Surveillance" prefWidth="120"/>
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </center>
+
+</BorderPane>
