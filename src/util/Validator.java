@@ -18,6 +18,10 @@ public class Validator {
             return "Le sexe du patient est obligatoire.";
         }
 
+        if (patient.getTelephone() == null || patient.getTelephone().trim().isEmpty()) {
+            return "Le téléphone du patient est obligatoire.";
+        }
+
         return null;
     }
 
@@ -34,12 +38,16 @@ public class Validator {
             return "Le type du traitement est obligatoire.";
         }
 
-        if (treatment.getNombrePrisesParJour() <= 0) {
-            return "Le nombre de prises par jour doit être supérieur à 0.";
+        if (treatment.getPosologie() == null || treatment.getPosologie().trim().isEmpty()) {
+            return "La posologie est obligatoire.";
         }
 
         if (treatment.getDureeEstimee() <= 0) {
             return "La durée estimée doit être supérieure à 0.";
+        }
+
+        if (treatment.getNombrePrisesParJour() <= 0) {
+            return "Le nombre de prises par jour doit être supérieur à 0.";
         }
 
         if (treatment.getDateDebut() != null && treatment.getDateFin() != null) {
