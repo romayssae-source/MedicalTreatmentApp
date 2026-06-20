@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.MainController"
+            stylesheets="@../style.css">
+
+    <top>
+        <MenuBar>
+            <menus>
+                <Menu text="Fichier">
+                    <items>
+                        <MenuItem fx:id="importItem" text="Importer"/>
+                        <MenuItem fx:id="exportItem" text="Exporter"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem fx:id="quitItem" text="Quitter"/>
+                    </items>
+                </Menu>
+
+                <Menu text="Patients">
+                    <items>
+                        <MenuItem fx:id="addPatientItem" text="Ajouter un patient"/>
+                        <MenuItem fx:id="managePatientsItem" text="Gérer les patients"/>
+                    </items>
+                </Menu>
+
+                <Menu text="Traitements">
+                    <items>
+                        <MenuItem fx:id="addTreatmentItem" text="Ajouter un traitement"/>
+                        <MenuItem fx:id="manageTreatmentsItem" text="Gérer les traitements"/>
+                    </items>
+                </Menu>
+
+                <Menu text="Aide">
+                    <items>
+                        <MenuItem fx:id="aboutItem" text="À propos"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+
+    <left>
+        <VBox spacing="12" prefWidth="200" styleClass="navigation">
+            <padding>
+                <Insets top="20" right="15" bottom="20" left="15"/>
+            </padding>
+
+            <children>
+                <Button fx:id="patientsButton" text="Patients"/>
+                <Button fx:id="treatmentsButton" text="Traitements"/>
+                <Button fx:id="statisticsButton" text="Statistiques"/>
+                <Button fx:id="settingsButton" text="Paramètres"/>
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="contentPane" styleClass="content-pane">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+        </StackPane>
+    </center>
+
+    <bottom>
+        <HBox styleClass="status-bar">
+            <padding>
+                <Insets top="8" right="12" bottom="8" left="12"/>
+            </padding>
+
+            <children>
+                <Label fx:id="statusLabel" text="Statut"/>
+            </children>
+        </HBox>
+    </bottom>
+
+</BorderPane>
