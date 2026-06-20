@@ -6,7 +6,6 @@ import model.Patient;
 import util.AlertUtil;
 import util.CsvExporter;
 import util.Validator;
-import view.PatientView;
 
 import java.sql.SQLException;
 import java.time.LocalDate;

@@ -8,7 +8,6 @@ import model.Treatment;
 import util.AlertUtil;
 import util.CsvExporter;
 import util.Validator;
-import view.TreatmentView;
 
 import java.sql.SQLException;
 import java.time.LocalDate;

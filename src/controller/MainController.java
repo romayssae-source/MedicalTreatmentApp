@@ -4,10 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import util.AlertUtil;
 import view.MainView;
-import view.PatientView;
 import view.SettingsView;
-import view.StatisticsView;
-import view.TreatmentView;
 
 public class MainController {
 
