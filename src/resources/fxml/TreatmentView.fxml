@@ -1,21 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      spacing="15"
-      alignment="CENTER">
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.TreatmentController"
+            styleClass="page-root">
 
-    <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
-    </padding>
+    <top>
+        <VBox spacing="5">
+            <children>
+                <Label text="Gestion des Traitements Médicaux" styleClass="page-title"/>
+                <Label text="Création, modification, suppression et suivi des traitements liés aux patients." styleClass="page-subtitle"/>
+            </children>
+        </VBox>
+    </top>
 
-    <children>
-        <Label text="Gestion des Traitements Médicaux" styleClass="page-title"/>
-        <Label text="Cette section permettra de gérer les traitements associés aux patients."/>
-    </children>
+    <left>
+        <Accordion prefWidth="390">
+            <panes>
+                <TitledPane text="Formulaire Traitement" expanded="true">
+                    <content>
+                        <VBox spacing="12" styleClass="form-card">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
 
-</VBox>
+                            <children>
+                                <GridPane hgap="10" vgap="10">
+                                    <children>
+                                        <Label text="Patient :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                        <ComboBox fx:id="patientComboBox" promptText="Choisir un patient" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                        <Label text="Traitement :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="nomField" promptText="Nom du traitement" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                                        <Label text="Type :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                        <ComboBox fx:id="typeComboBox" promptText="Type" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                                        <Label text="Posologie :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="posologieField" promptText="Ex : 1 comprimé matin et soir" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                                        <Label text="Effets secondaires :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                        <TextArea fx:id="effetsArea" promptText="Effets secondaires possibles" prefRowCount="3" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                                        <Label text="Début :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                                        <DatePicker fx:id="dateDebutPicker" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                                        <Label text="Fin :" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                                        <DatePicker fx:id="dateFinPicker" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                                        <Label text="Durée estimée :" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                                        <Spinner fx:id="dureeSpinner" editable="true" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                                        <Label text="Prises / jour :" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                                        <Spinner fx:id="prisesSpinner" editable="true" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+
+                                        <Label text="Progression :" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                                        <HBox spacing="8" GridPane.rowIndex="9" GridPane.columnIndex="1">
+                                            <children>
+                                                <Slider fx:id="progressionSlider" HBox.hgrow="ALWAYS"/>
+                                                <Label fx:id="progressionLabel" text="0 %"/>
+                                            </children>
+                                        </HBox>
+
+                                        <CheckBox fx:id="actifCheckBox" text="Traitement actif" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
+                                    </children>
+                                </GridPane>
+
+                                <HBox spacing="8">
+                                    <children>
+                                        <Button fx:id="addButton" text="Ajouter"/>
+                                        <Button fx:id="updateButton" text="Modifier"/>
+                                    </children>
+                                </HBox>
+
+                                <HBox spacing="8">
+                                    <children>
+                                        <Button fx:id="deleteButton" text="Supprimer" styleClass="danger-button"/>
+                                        <Button fx:id="clearButton" text="Vider"/>
+                                    </children>
+                                </HBox>
+
+                                <Button fx:id="exportButton" text="Exporter CSV" maxWidth="Infinity"/>
+                            </children>
+                        </VBox>
+                    </content>
+                </TitledPane>
+
+                <TitledPane text="Types de traitements">
+                    <content>
+                        <VBox spacing="10" styleClass="form-card">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                            <children>
+                                <Label text="Catégories disponibles"/>
+                                <ListView fx:id="typeListView" prefHeight="220"/>
+                            </children>
+                        </VBox>
+                    </content>
+                </TitledPane>
+            </panes>
+        </Accordion>
+    </left>
+
+    <center>
+        <VBox spacing="12">
+            <padding>
+                <Insets top="0" right="0" bottom="0" left="15"/>
+            </padding>
+
+            <children>
+                <HBox spacing="10" styleClass="search-bar">
+                    <children>
+                        <TextField fx:id="searchField" promptText="Rechercher traitement, patient, posologie..." HBox.hgrow="ALWAYS"/>
+                        <ComboBox fx:id="filterTypeComboBox" prefWidth="160"/>
+                        <CheckBox fx:id="filterActiveCheckBox" text="Actifs"/>
+                        <ProgressIndicator fx:id="loadingIndicator" prefWidth="28" prefHeight="28"/>
+                    </children>
+                </HBox>
+
+                <TableView fx:id="treatmentTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+                        <TableColumn fx:id="patientColumn" text="Patient" prefWidth="150"/>
+                        <TableColumn fx:id="nomColumn" text="Traitement" prefWidth="150"/>
+                        <TableColumn fx:id="typeColumn" text="Type" prefWidth="130"/>
+                        <TableColumn fx:id="posologieColumn" text="Posologie" prefWidth="180"/>
+                        <TableColumn fx:id="debutColumn" text="Début" prefWidth="100"/>
+                        <TableColumn fx:id="finColumn" text="Fin" prefWidth="100"/>
+                        <TableColumn fx:id="actifColumn" text="Actif" prefWidth="70"/>
+                        <TableColumn fx:id="progressionColumn" text="Progression" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </center>
+
+</BorderPane>
