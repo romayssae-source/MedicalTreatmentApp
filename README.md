@@ -36,3 +36,14 @@ MedicalTreatmentApp/
 │       ├── style.css
 │       └── fxml/
 └── README.md
+```
+## 📹 Vidéo de démonstration
+
+Lien Google Drive : Lien Google Drive : [Voir la vidéo](https://drive.google.com/file/d/1lGxbU8E-56Jkf1rierFh-s7M5OprB4eQ/view?usp=drive_link)
+
+## 📄 Rapport
+
+Le rapport complet est disponible ici :[Rapport_MedicalTreatmentApp_SABAR_SENHAJI_Final.pdf](./Rapport_MedicalTreatmentApp_SABAR_SENHAJI_Final.pdf)
+
+
+
