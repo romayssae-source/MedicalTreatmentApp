@@ -36,3 +36,10 @@ MedicalTreatmentApp/
 │       ├── style.css
 │       └── fxml/
 └── README.md
+## 📹 Vidéo de démonstration
+
+Lien Google Drive : https://drive.google.com/file/d/1lGxbU8E-56Jkf1rierFh-s7M5OprB4eQ/view?usp=sharing
+
+## 📄 Rapport
+
+Le rapport complet est disponible ici : 
